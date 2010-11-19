@@ -1,15 +1,16 @@
-#ifndef EventButton_h
-#define EventButton_h
+#ifndef EVENTBUTTON_H
+#define EVENTBUTTON_H
 
 #include "WProgram.h"
 
-const int none      = 0;
-const int press     = 1;
-const int unpress   = 2;
-const int click     = 3;
-const int holding   = 4;
-const int hold      = 5;
-const int dblclick  = 6;
+const int none        = 0;
+const int press       = 1;
+const int unpress     = 2;
+const int click       = 3;
+const int holding     = 4;
+const int hold        = 5;
+const int dblclicking = 6;
+const int dblclick    = 7;
 
 typedef struct sEvent {
   int event;
@@ -19,12 +20,12 @@ typedef struct sEvent {
 class EventButton {
    public:
       EventButton (int eventPin);
-      void  onPress    ();
-      void  onUnpress  ();
-      void  onClick    ();
-      void  onDblClick ();
-      void  onHold     ();
-      void  onHolding  ();
+      virtual void  onPress    ();
+      virtual void  onUnpress  ();
+      virtual void  onClick    ();
+      virtual void  onDblClick ();
+      virtual void  onHold     ();
+      virtual void  onHolding  ();
       Event getEvent   ();
    private:
       Event _lastEvent;

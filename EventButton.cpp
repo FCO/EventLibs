@@ -2,49 +2,34 @@
 #include "EventButton.h"
 
 EventButton::EventButton (int eventPin) {
-  Serial.begin(9600);
   pinMode(eventPin, INPUT);
   _eventPin = eventPin;
+  _lastEvent.event = none;
+  _lastEvent.time  = -1;
 }
 
-void EventButton::onPress () {
-  Serial.write("onPress\n");
-}
-
-void EventButton::onUnpress () {
-  Serial.write("onUnpress\n");
-}
-
-void EventButton::onClick() {
-  Serial.write("onClick\n");
-}
-
-void EventButton::onDblClick () {
-  Serial.write("onDblClick\n");
-}
-
-void EventButton::onHold () {
-  Serial.write("onHold\n");
-}
-
-void EventButton::onHolding () {
-  Serial.write("onHolding\n");
-}
+void EventButton::onPress () { }
+void EventButton::onUnpress () { }
+void EventButton::onClick() { }
+void EventButton::onDblClick () { }
+void EventButton::onHold () { }
+void EventButton::onHolding () { }
 
 Event EventButton::getEvent() {
-  
+  unsigned long time = millis();
   int buttonState = digitalRead(_eventPin);
 
   if(_lastEvent.event == press) {
     if(buttonState == HIGH) {
-      if(millis() - _lastEvent.time >= 2000) {
+      if(time - _lastEvent.time >= 2000) {
         _lastEvent.event = holding;
         onHolding();
       }
     } else {
+      _lastEvent.event = unpress;
       onUnpress();
-      _lastEvent.event = click;
-      onClick();
+      //_lastEvent.event = click;
+      //onClick();
     }
   }else if(_lastEvent.event == holding) {
     if(buttonState == LOW) {
@@ -53,8 +38,20 @@ Event EventButton::getEvent() {
       _lastEvent.time = -1;
       onHold();
     }
+  } else if(_lastEvent.event == unpress) {
+    if(buttonState == LOW && time - _lastEvent.time > 300) {
+      _lastEvent.event = click;
+      onClick();
+    } else if(buttonState == HIGH && time - _lastEvent.time < 300){
+      _lastEvent.event = dblclicking;
+    }
+  } else if(_lastEvent.event == dblclicking) {
+    if(buttonState == LOW) {
+      _lastEvent.event = dblclick;
+      onDblClick();
+    }
   } else if(buttonState == HIGH) {
-    _lastEvent.time = millis();
+    _lastEvent.time = time;
     _lastEvent.event = press;
     onPress();
   }

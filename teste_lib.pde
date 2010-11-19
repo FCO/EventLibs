@@ -25,6 +25,16 @@ class Button :public EventButton {
       }
       if(ledState) digitalWrite(ledPin, HIGH);
     }
+    void onDblClick () {
+      for(int i = 0; i < 3; i++) {
+        digitalWrite(ledPin, HIGH);
+        digitalWrite(alertPin, HIGH);
+        delay(300);
+        digitalWrite(ledPin, LOW);
+        digitalWrite(alertPin, LOW);
+        delay(300);
+      }
+    }
     void onHolding () {
       digitalWrite(alertPin, HIGH);
     }
