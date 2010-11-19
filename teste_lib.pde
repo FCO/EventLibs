@@ -34,6 +34,7 @@ class Button :public EventButton {
         digitalWrite(alertPin, LOW);
         delay(300);
       }
+      if(ledState) digitalWrite(ledPin, HIGH);
     }
     void onHolding () {
       digitalWrite(alertPin, HIGH);
