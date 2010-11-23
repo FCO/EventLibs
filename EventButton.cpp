@@ -19,6 +19,11 @@ Event EventButton::getEvent() {
   unsigned long time = millis();
   int buttonState = digitalRead(_eventPin);
 
+  if(_lastEvent.event == holding) {
+    onHolding();
+  //} else if(_lastEvent.event == press) {
+  //  //onPressing();
+  }
   if(_lastEvent.event == press) {
     if(buttonState == HIGH) {
       if(time - _lastEvent.time >= 2000) {

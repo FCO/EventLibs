@@ -21,12 +21,13 @@ class EventButton {
    public:
       EventButton (int eventPin);
       virtual void  onPress    ();
+      //virtual void  onPressing ();
       virtual void  onUnpress  ();
       virtual void  onClick    ();
       virtual void  onDblClick ();
       virtual void  onHold     ();
       virtual void  onHolding  ();
-      Event getEvent   ();
+      Event getEvent           ();
    private:
       Event _lastEvent;
       int   _eventPin;
