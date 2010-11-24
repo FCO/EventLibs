@@ -2,21 +2,61 @@
 #include "EventLED.h"
 
 EventLED::EventLED (int eventPin) {
-  pinMode(eventPin, INPUT);
+  pinMode(eventPin, OUTPUT);
   _eventPin = eventPin;
   _lastEvent.event = none;
   _lastEvent.time  = -1;
-  _lastValue;
-  _valueInterval = 2;
-  _timeInterval = 50;
-  _maxValue     = 100;
-  _minValue     = 0;
-  _realValueInterval = map(_valueInterval, 0, 1024, _minValue, _maxValue);
+  _ledState = 0;
+  digitalWrite(_eventPin, LOW);
 }
 
 void EventLED::onChange (Event event) { }
 
-Event EventLED::getEvent() {
+void EventLED::getEvent() {
   unsigned long time = millis();
-  return _lastEvent;
+  if(_blinkState) {
+    if(time - _lastBlink) {
+      toggle();
+      _lastBlink = time;
+    }
+  }
+}
+
+void  onTurnOn     (){}
+void  onTurnOff    (){}
+void  onLight      (){}
+void  onDark       (){}
+void  onStartBlink (){}
+void  onStopBlink  (){}
+
+void turnOn ()       {
+  _ledState = 1;
+  digitalWrite(_eventPin, HIGH);
+  onTurnOn();
+}
+void turnOff()       {
+  _ledState = 0;
+  digitalWrite(_eventPin, LOW);
+  onTurnOff();
+}
+void toggle()        {
+  if(_ledState) turnOff();
+  else turnOn();
+}
+void startBlinking() {
+  _blinkState = 1;
+  onStartBlink();
+}
+void stopBlinking () {
+  _blinkState = 0;
+  onStopBlink();
+}
+void blink(int sec) {
+  unsigned long time = millis();
+  onStartBlink();
+  while(millis() - time < sec){
+    toggle();
+    delay(1000);
+  }
+  onStopBlink();
 }
