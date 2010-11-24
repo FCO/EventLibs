@@ -4,7 +4,12 @@
 #include "WProgram.h"
 
 const int none        = 0;
-const int change      = 1;
+const int turnon      = 0;
+const int turnoff     = 0;
+const int light       = 0;
+const int dark        = 0;
+const int startblink  = 0;
+const int stopblink   = 0;
 
 typedef struct sEvent {
   int event;
