@@ -3,14 +3,14 @@
 
 #include "WProgram.h"
 
-const int none        = 0;
-const int turnon      = 1;
-const int turnoff     = 2;
-const int toggle      = 2;
-const int light       = 3;
-const int dark        = 4;
-const int startblink  = 5;
-const int stopblink   = 6;
+const int None        = 0;
+const int Turnon      = 1;
+const int Turnoff     = 2;
+const int Toggle      = 2;
+const int Light       = 3;
+const int Dark        = 4;
+const int Startblink  = 5;
+const int Stopblink   = 6;
 
 class EventLED {
    public:

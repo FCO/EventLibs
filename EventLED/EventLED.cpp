@@ -4,13 +4,10 @@
 EventLED::EventLED (int eventPin) {
   pinMode(eventPin, OUTPUT);
   _eventPin = eventPin;
-  _lastEvent.event = none;
-  _lastEvent.time  = -1;
   _ledState = 0;
   digitalWrite(_eventPin, LOW);
+  _blinkState = 0;
 }
-
-void EventLED::onChange (Event event) { }
 
 void EventLED::getEvent() {
   unsigned long time = millis();
@@ -22,36 +19,36 @@ void EventLED::getEvent() {
   }
 }
 
-void  onTurnOn     (){}
-void  onTurnOff    (){}
-void  onLight      (){}
-void  onDark       (){}
-void  onStartBlink (){}
-void  onStopBlink  (){}
+void  EventLED::onTurnOn     (){}
+void  EventLED::onTurnOff    (){}
+void  EventLED::onLight      (){}
+void  EventLED::onDark       (){}
+void  EventLED::onStartBlink (){}
+void  EventLED::onStopBlink  (){}
 
-void turnOn ()       {
+void EventLED::turnOn ()       {
   _ledState = 1;
   digitalWrite(_eventPin, HIGH);
   onTurnOn();
 }
-void turnOff()       {
+void EventLED::turnOff()       {
   _ledState = 0;
   digitalWrite(_eventPin, LOW);
   onTurnOff();
 }
-void toggle()        {
+void EventLED::toggle()        {
   if(_ledState) turnOff();
   else turnOn();
 }
-void startBlinking() {
+void EventLED::startBlinking() {
   _blinkState = 1;
   onStartBlink();
 }
-void stopBlinking () {
+void EventLED::stopBlinking () {
   _blinkState = 0;
   onStopBlink();
 }
-void blink(int sec) {
+void EventLED::blink(int sec) {
   unsigned long time = millis();
   onStartBlink();
   while(millis() - time < sec){
