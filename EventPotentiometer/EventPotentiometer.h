@@ -16,7 +16,9 @@ class EventPotentiometer {
    public:
       EventPotentiometer (int eventPin);
       virtual void  onChange   (pEvent event);
-      pEvent getEvent           ();
+      pEvent getEvent          ();
+      void setIntervalTime     (int);
+      void setIntervalValue    (int);
    private:
       int   _maxValue;
       int   _minValue;

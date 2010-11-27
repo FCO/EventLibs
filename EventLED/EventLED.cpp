@@ -7,12 +7,13 @@ EventLED::EventLED (int eventPin) {
   _ledState = 0;
   digitalWrite(_eventPin, LOW);
   _blinkState = 0;
+  _blinkingInterval = 1000;
 }
 
 void EventLED::getEvent() {
   unsigned long time = millis();
   if(_blinkState) {
-    if(time - _lastBlink) {
+    if(time - _lastBlink >= _blinkingInterval) {
       toggle();
       _lastBlink = time;
     }

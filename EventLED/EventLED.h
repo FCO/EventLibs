@@ -32,6 +32,7 @@ class EventLED {
       int   _eventPin;
       int   _ledState;
       int   _blinkState;
+      int   _blinkingInterval;
       unsigned long _lastBlink;
 };
 #endif

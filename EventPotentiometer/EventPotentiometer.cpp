@@ -23,10 +23,18 @@ pEvent EventPotentiometer::getEvent() {
     _lastEvent.time = time;
     if(abs(value - _lastEvent.value) > _realValueInterval) {
       _lastEvent.event = change;
-      _lastEvent.value = map(value, 0, 1024, _minValue, _maxValue};
+      _lastEvent.value = map(value, 0, 1024, _minValue, _maxValue);
       onChange(_lastEvent);
     }
   }
 
   return _lastEvent;
+}
+
+void EventPotentiometer::setIntervalTime (int interval) {
+   _timeInterval = interval;
+}
+
+void EventPotentiometer::setIntervalValue (int interval) {
+   _valueInterval = interval;
 }
