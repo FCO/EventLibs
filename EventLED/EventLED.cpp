@@ -30,11 +30,13 @@ void  EventLED::onStopBlink  (){}
 void EventLED::turnOn ()       {
   _ledState = 1;
   digitalWrite(_eventPin, HIGH);
+  if(_blinkState) stopBlinking();
   onTurnOn();
 }
 void EventLED::turnOff()       {
   _ledState = 0;
   digitalWrite(_eventPin, LOW);
+  if(_blinkState) stopBlinking();
   onTurnOff();
 }
 void EventLED::toggle()        {
