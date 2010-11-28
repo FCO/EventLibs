@@ -28,6 +28,8 @@ class EventLED {
       void startBlinking();
       void stopBlinking ();
       void blink(int sec);
+      void setInterval(int usec);
+      int  getInterval();
    private:
       int   _eventPin;
       int   _ledState;

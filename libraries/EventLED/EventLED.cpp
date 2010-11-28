@@ -52,11 +52,18 @@ void EventLED::stopBlinking () {
   onStopBlink();
 }
 void EventLED::blink(int sec) {
+  sec = sec * 1000;
   unsigned long time = millis();
   onStartBlink();
   while(millis() - time < sec){
     toggle();
-    delay(1000);
+    delay(_blinkingInterval);
   }
   onStopBlink();
+}
+void EventLED::setInterval(int usec) {
+  _blinkingInterval = usec;
+}
+int EventLED::getInterval() {
+  return _blinkingInterval;
 }
