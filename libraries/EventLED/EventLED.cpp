@@ -14,7 +14,7 @@ void EventLED::getEvent() {
   unsigned long time = millis();
   if(_blinkState) {
     if(time - _lastBlink >= _blinkingInterval) {
-      toggle();
+      toggle(0);
       _lastBlink = time;
     }
   }
@@ -33,15 +33,31 @@ void EventLED::turnOn ()       {
   if(_blinkState) stopBlinking();
   onTurnOn();
 }
+void EventLED::turnOn (int stopblink)       {
+  _ledState = 1;
+  digitalWrite(_eventPin, HIGH);
+  if(_blinkState && stopblink) stopBlinking();
+  onTurnOn();
+}
 void EventLED::turnOff()       {
   _ledState = 0;
   digitalWrite(_eventPin, LOW);
   if(_blinkState) stopBlinking();
   onTurnOff();
 }
+void EventLED::turnOff(int stopblink)       {
+  _ledState = 0;
+  digitalWrite(_eventPin, LOW);
+  if(_blinkState && stopblink) stopBlinking();
+  onTurnOff();
+}
 void EventLED::toggle()        {
   if(_ledState) turnOff();
   else turnOn();
+}
+void EventLED::toggle(int stopblink)        {
+  if(_ledState) turnOff(stopblink);
+  else turnOn(stopblink);
 }
 void EventLED::startBlinking() {
   _blinkState = 1;

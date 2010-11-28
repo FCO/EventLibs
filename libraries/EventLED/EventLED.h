@@ -23,8 +23,11 @@ class EventLED {
       virtual void  onStopBlink  ();
       void getEvent              ();
       void turnOn ();
+      void turnOn (int stopblink);
       void turnOff();
+      void turnOff(int stopblink);
       void toggle();
+      void toggle(int stopblink);
       void startBlinking();
       void stopBlinking ();
       void blink(int sec);
