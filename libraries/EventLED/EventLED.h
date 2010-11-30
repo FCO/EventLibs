@@ -31,13 +31,18 @@ class EventLED {
       void startBlinking();
       void stopBlinking ();
       void blink(int sec);
-      void setInterval(int usec);
-      int  getInterval();
+      void blinkOnce(int usec);
+      void setOnTime(int usec);
+      int  getOnTime();
+      void setOffTime(int usec);
+      int  getOffTime();
    private:
       int   _eventPin;
       int   _ledState;
       int   _blinkState;
-      int   _blinkingInterval;
+      unsigned long _blinkingIntervalOn;
+      unsigned long _blinkingIntervalOff;
+      unsigned long _blinkOnce;
       unsigned long _lastBlink;
 };
 #endif

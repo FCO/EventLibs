@@ -7,15 +7,24 @@ EventLED::EventLED (int eventPin) {
   _ledState = 0;
   digitalWrite(_eventPin, LOW);
   _blinkState = 0;
-  _blinkingInterval = 1000;
+  _blinkingIntervalOn  = 1000;
+  _blinkingIntervalOff = 1000;
 }
 
 void EventLED::getEvent() {
   unsigned long time = millis();
-  if(_blinkState) {
-    if(time - _lastBlink >= _blinkingInterval) {
-      toggle(0);
+  if(_blinkOnce) {
+    if(time >= _blinkOnce) {
       _lastBlink = time;
+      _blinkOnce = 0;
+      turnOff(0);
+    }
+  }
+  else if(_blinkState) {
+    if(time - _lastBlink >= _blinkingIntervalOff) {
+      //toggle(0);
+      //_lastBlink = time;
+      blinkOnce(_blinkingIntervalOn);
     }
   }
 }
@@ -67,19 +76,27 @@ void EventLED::stopBlinking () {
   _blinkState = 0;
   onStopBlink();
 }
-void EventLED::blink(int sec) {
-  sec = sec * 1000;
-  unsigned long time = millis();
+void EventLED::blink(int times) {
   onStartBlink();
-  while(millis() - time < sec){
-    toggle();
-    delay(_blinkingInterval);
+  for(int i = 0; i < times; i++){
+    blinkOnce(_blinkingIntervalOn);
+    delay(_blinkingIntervalOff);
   }
   onStopBlink();
 }
-void EventLED::setInterval(int usec) {
-  _blinkingInterval = usec;
+void EventLED::blinkOnce(int usec) {
+  turnOn(0);
+  _blinkOnce = millis() + usec;
 }
-int EventLED::getInterval() {
-  return _blinkingInterval;
+void EventLED::setOnTime(int usec) {
+  _blinkingIntervalOn = usec;
+}
+int EventLED::getOnTime() {
+  return _blinkingIntervalOn;
+}
+void EventLED::setOffTime(int usec) {
+  _blinkingIntervalOff = usec;
+}
+int EventLED::getOffTime() {
+  return _blinkingIntervalOff;
 }

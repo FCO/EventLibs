@@ -19,7 +19,9 @@ class EventPotentiometer {
       pEvent getEvent          ();
       void setIntervalTime     (int);
       void setIntervalValue    (int);
+      void setMinMax(int min, int max);
    private:
+      int   _transformValue(int value);
       int   _maxValue;
       int   _minValue;
       int   _realValueInterval;
