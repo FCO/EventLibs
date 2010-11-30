@@ -36,6 +36,7 @@ class EventLED {
       int  getOnTime();
       void setOffTime(int usec);
       int  getOffTime();
+      void setInterval(int usec);
    private:
       int   _eventPin;
       int   _ledState;

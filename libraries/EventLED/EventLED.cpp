@@ -100,3 +100,7 @@ void EventLED::setOffTime(int usec) {
 int EventLED::getOffTime() {
   return _blinkingIntervalOff;
 }
+void EventLED::setInterval(int usec) {
+  setOnTime(usec);
+  setOffTime(usec);
+}
